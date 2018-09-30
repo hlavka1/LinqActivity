@@ -34,6 +34,8 @@ namespace Demo_LINQ_ClassOfProducts
             
             OrderByNameAnonymous(productList); // -- Wyatt
             
+            OrderByStockAnonymous(productList); // -- Wyatt, custom
+            
             OrderByCanBringOnBusAnoymous(productList); // -- Justina
 
             OrderByUnits(productList); // -- Justina
@@ -484,10 +486,39 @@ namespace Demo_LINQ_ClassOfProducts
                       
                 };
         }
-
+        
+        /// <summary>
+        /// Grab all the things and list them by units in stock -- Wyatt
+        /// </summary>
+        /// <param name="products"></param>
         private static void OrderByStockAnonymous(List<Product> products)
         {
+            string TAB = "    ";
             
+            Console.Clear();
+            Console.WriteLine(TAB + "List everything in product list and sort by units in stock");
+            Console.WriteLine();            
+            
+            var stock =
+                from product in products
+                orderby product.UnitsInStock descending
+                select new
+                {
+                    Name = product.ProductName,
+                    Stock = product.UnitsInStock
+                };
+
+            Console.WriteLine(TAB + "Product Name".PadRight(40) + "Product Stock".PadLeft(30));
+            Console.WriteLine(TAB + "------------".PadRight(40) + "-------------".PadLeft(30));
+
+            foreach (var product in stock)
+            {
+                Console.WriteLine(TAB + product.Name.PadRight(40) + product.Stock.ToString().PadLeft(30));
+            }
+
+            Console.WriteLine();
+            Console.WriteLine(TAB + "Press any key to continue.");
+            Console.ReadKey();
         }
     }
 }
