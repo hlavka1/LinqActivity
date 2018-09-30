@@ -32,15 +32,6 @@ namespace Demo_LINQ_ClassOfProducts
 
             //
             // Write the following methods
-            //
-
-
-
-            //
-
-
-
-
 
             // OrderByPrice(): List all products with a unit price less than $10. Order by price. -- Justina
 
@@ -339,5 +330,70 @@ namespace Demo_LINQ_ClassOfProducts
                     Price = product.UnitPrice
                 };
         }
+
+        // OrderCanBringOnBus(): List all products with a unit CanBringOnBus less than $10. Order by CanBringOnBus. -- Justina
+
+        private static void OrderByCanBringOnBus(List<Product> products)
+        {
+            string TAB = "   ";
+
+            Console.Clear();
+            Console.WriteLine(TAB + "List all beverages and sort by the unit CanBringOnBus.");
+            Console.WriteLine();
+
+            //
+            // query syntax
+            //
+            var sortedProducts =
+                from product in products
+                where product.CanBringOnBus == "Beverages"
+                orderby product.CanBringOnBus descending
+                select product;
+
+            //
+            // lambda syntax
+            //
+            //var sortedProducts = products.Where(p => p.CanBringOnBus == "Beverages").OrderByDescending(p => p.UnitCanBringOnBus);
+
+            Console.WriteLine(TAB + "CanBringOnBus".PadRight(15) + "Product Name".PadRight(25) + "Unit CanBringOnBus".PadLeft(10));
+            Console.WriteLine(TAB + "--------".PadRight(15) + "------------".PadRight(25) + "----------".PadLeft(10));
+
+            foreach (Product product in sortedProducts)
+            {
+                Console.WriteLine(TAB + product.CanBringOnBus.PadRight(15) + product.ProductName.PadRight(25) + product.CanBringOnBus.ToString().PadLeft(10));
+            }
+
+            Console.WriteLine();
+            Console.WriteLine(TAB + "Press any key to continue.");
+            Console.ReadKey();
+        }
+
+        private static void OrderByCanBringOnBusAnoymous(List<Product> products)
+        {
+            string TAB = "   ";
+
+            Console.Clear();
+            Console.WriteLine(TAB + "List all beverages that cost more the $15 and sort by the unit CanBringOnBus.");
+            Console.WriteLine();
+
+            //
+            // query syntax
+            //
+            var sortedProducts =
+                from product in products
+                where product.CanBringOnBus == "Beverages" &&
+                    product.UnitCanBringOnBus == true
+                orderby product.UnitCanBringOnBus descending
+                select new
+                {
+                    Name = product.ProductName,
+                    CanBringOnBus = product.UnitCanBringOnBus
+                      
+        };
+            Console.WriteLine();
+            Console.ReadKey();
+        }
+       
     }
+  
 }

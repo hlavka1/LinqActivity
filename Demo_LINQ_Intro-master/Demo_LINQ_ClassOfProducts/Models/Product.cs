@@ -18,8 +18,8 @@ namespace Demo_LINQ_ClassOfProducts
 
         public string Price { get; set; }
 
-
-
-
+        public string CanBringOnBus { get; set; }
+        public object Unit { get; internal set; }
+        public bool UnitCanBringOnBus { get; internal set; }
     } 
 }
