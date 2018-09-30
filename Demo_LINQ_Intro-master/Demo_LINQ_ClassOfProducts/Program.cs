@@ -20,9 +20,9 @@ namespace Demo_LINQ_ClassOfProducts
             //
             // write all data files to Data folder
             //
-            GenerateDataFiles.InitializeXmlFile();
+            //GenerateDataFiles.InitializeXmlFile();
 
-            List<Product> productList = ReadAllProductsFromXml();
+            List<Product> productList = GenerateDataFiles.InitializeProductList();
 
             OrderByCatagory(productList); // -- Example, John
 
@@ -483,6 +483,11 @@ namespace Demo_LINQ_ClassOfProducts
                     CanBringOnBus = product.UnitCanBringOnBus
                       
                 };
+        }
+
+        private static void OrderByStockAnonymous(List<Product> products)
+        {
+            
         }
     }
 }
