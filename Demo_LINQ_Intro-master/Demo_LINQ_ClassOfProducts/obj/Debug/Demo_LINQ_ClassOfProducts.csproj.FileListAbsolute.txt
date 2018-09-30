@@ -6,3 +6,10 @@ C:\Users\myers17\Desktop\Demo_LINQ_Intro-master\Demo_LINQ_ClassOfProducts\obj\De
 C:\Users\myers17\Desktop\Demo_LINQ_Intro-master\Demo_LINQ_ClassOfProducts\obj\Debug\Demo_LINQ_ClassOfProducts.csproj.CoreCompileInputs.cache
 C:\Users\myers17\Desktop\Demo_LINQ_Intro-master\Demo_LINQ_ClassOfProducts\obj\Debug\Demo_LINQ_ClassOfProducts.exe
 C:\Users\myers17\Desktop\Demo_LINQ_Intro-master\Demo_LINQ_ClassOfProducts\obj\Debug\Demo_LINQ_ClassOfProducts.pdb
+C:\Users\Momo\Source\Repos\LinqActivity4\Demo_LINQ_Intro-master\Demo_LINQ_ClassOfProducts\bin\Debug\Demo_LINQ_ClassOfProducts.exe.config
+C:\Users\Momo\Source\Repos\LinqActivity4\Demo_LINQ_Intro-master\Demo_LINQ_ClassOfProducts\obj\Debug\Demo_LINQ_ClassOfProducts.exe
+C:\Users\Momo\Source\Repos\LinqActivity4\Demo_LINQ_Intro-master\Demo_LINQ_ClassOfProducts\obj\Debug\Demo_LINQ_ClassOfProducts.pdb
+C:\Users\Momo\Source\Repos\LinqActivity4\Demo_LINQ_Intro-master\Demo_LINQ_ClassOfProducts\bin\Debug\Data\Products.xml
+C:\Users\Momo\Source\Repos\LinqActivity4\Demo_LINQ_Intro-master\Demo_LINQ_ClassOfProducts\bin\Debug\Demo_LINQ_ClassOfProducts.exe
+C:\Users\Momo\Source\Repos\LinqActivity4\Demo_LINQ_Intro-master\Demo_LINQ_ClassOfProducts\bin\Debug\Demo_LINQ_ClassOfProducts.pdb
+C:\Users\Momo\Source\Repos\LinqActivity4\Demo_LINQ_Intro-master\Demo_LINQ_ClassOfProducts\obj\Debug\Demo_LINQ_ClassOfProducts.csprojResolveAssemblyReference.cache

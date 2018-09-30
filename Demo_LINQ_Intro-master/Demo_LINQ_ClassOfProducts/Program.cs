@@ -29,7 +29,9 @@ namespace Demo_LINQ_ClassOfProducts
             OrderByCatagoryAnoymous(productList); // -- Example, John
             
             OrderByCatagoryExpensive(productList); // -- Morgan
-            
+
+            OrderByLowOnStock(productList); // -- Morgan - student choice
+
             OrderByTotalValueAnonymous(productList); // -- Wyatt
             
             OrderByNameAnonymous(productList); // -- Wyatt
@@ -201,18 +203,6 @@ namespace Demo_LINQ_ClassOfProducts
                     Price = product.UnitPrice
                 }).Take(2);
 
-            //
-            // lambda syntax
-            //
-            //var sortedProducts = products.Where(p => p.Category == "Beverages" && p.UnitPrice > 15).OrderByDescending(p => p.UnitPrice).Select(p => new
-            //{
-            //    Name = p.ProductName,
-            //    Price = p.UnitPrice
-            //});
-
-
-            decimal average = products.Average(p => p.UnitPrice);
-
             Console.WriteLine(TAB + "Product Name".PadRight(20) + "Product Price".PadLeft(15));
             Console.WriteLine(TAB + "------------".PadRight(20) + "-------------".PadLeft(15));
 
@@ -222,16 +212,54 @@ namespace Demo_LINQ_ClassOfProducts
             }
 
             Console.WriteLine();
-            Console.WriteLine(TAB + "Average Price:".PadRight(20) + average.ToString("C2").PadLeft(15));
+            Console.WriteLine(TAB + "Press any key to continue.");
+            Console.ReadKey();
+        }
+
+        /// <summary>
+        /// Lists products low in stock (under X units) -- Morgan, Student Choice
+        /// </summary>
+        private static void OrderByLowOnStock(List<Product> products)
+        {
+            string TAB = "   ";
+
+            Console.Clear();
+            Console.WriteLine(TAB + "List of Products Under 10 Units of Stock.");
+            Console.WriteLine();
+
+            //
+            // query syntax
+            //
+            var lowOnStock = (
+                from product in products
+                where product.UnitsInStock < 10
+                orderby product.UnitsInStock ascending
+
+                select new
+                {
+                    Category = product.Category,
+                    Name = product.ProductName,
+                    Unit = product.UnitsInStock
+                }
+                );
+
+            Console.WriteLine(TAB + "Category".PadRight(20) + "Product Name".PadRight(30) + "# In Stock".PadLeft(10));
+            Console.WriteLine(TAB + "--------".PadRight(20) + "------------".PadRight(30) + "----------".PadLeft(10));
+
+            foreach (var product in lowOnStock)
+            {
+                Console.WriteLine(TAB + product.Category.PadRight(20) + product.Name.PadRight(30) + product.Unit.ToString().PadLeft(10));
+            }
 
             Console.WriteLine();
             Console.WriteLine(TAB + "Press any key to continue.");
             Console.ReadKey();
         }
 
-        // OrderByUnits(): List the names and units of all products with less than 10 units in stock. Order by units. -- Justina
 
-        private static void OrderByUnits(List<Product> products)
+// OrderByUnits(): List the names and units of all products with less than 10 units in stock. Order by units. -- Justina
+
+private static void OrderByUnits(List<Product> products)
         {
             string TAB = "   ";
 
