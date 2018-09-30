@@ -15,6 +15,8 @@ namespace Demo_LINQ_ClassOfProducts
     //
     class Program
     {
+        public static IEnumerable<object> UnitPrice { get; private set; }
+
         static void Main(string[] args)
         {
             //
@@ -238,7 +240,7 @@ namespace Demo_LINQ_ClassOfProducts
             string TAB = "   ";
 
             Console.Clear();
-            Console.WriteLine(TAB + "List all beverages and sort by the unit price.");
+            Console.WriteLine(TAB + "List all the names and units of all products with less than 10 units in stock. Order by units.");
             Console.WriteLine();
 
             //
@@ -246,8 +248,8 @@ namespace Demo_LINQ_ClassOfProducts
             //
             var sortedProducts =
                 from product in products
-                where product.Units == "Beverages"
-                orderby product.UnitPrice descending
+                where product.Units == "Units"
+                orderby product.UnitsInStock descending
                 select product;
 
             //
@@ -260,7 +262,7 @@ namespace Demo_LINQ_ClassOfProducts
 
             foreach (Product product in sortedProducts)
             {
-                Console.WriteLine(TAB + product.Units.PadRight(15) + product.ProductName.PadRight(25) + product.UnitPrice.ToString("C2").PadLeft(10));
+                Console.WriteLine(TAB + product.Units.PadRight(15) + product.ProductName.PadRight(25) + product.UnitsInStock.ToString("C2").PadLeft(10));
             }
 
             Console.WriteLine();
@@ -273,7 +275,7 @@ namespace Demo_LINQ_ClassOfProducts
             string TAB = "   ";
 
             Console.Clear();
-            Console.WriteLine(TAB + "List all beverages that cost more the $15 and sort by the unit price.");
+            Console.WriteLine(TAB + "List all the names and units of all products with less than 10 units in stock. Order by units.");
             Console.WriteLine();
 
             //
@@ -281,13 +283,13 @@ namespace Demo_LINQ_ClassOfProducts
             //
             var sortedProducts =
                 from product in products
-                where product.Units == "Beverages" &&
-                    product.UnitPrice > 15
-                orderby product.UnitPrice descending
+                where product.Units == "Units" &&
+                    product.UnitsInStock > 10
+                orderby product.UnitsInStock descending
                 select new
                 {
                     Name = product.ProductName,
-                    Price = product.UnitPrice
+                    Price = product.UnitsInStock
                 };
         }
 
@@ -296,33 +298,34 @@ namespace Demo_LINQ_ClassOfProducts
         private static void OrderByPrice(List<Product> products)
         {
             string TAB = "   ";
-
             Console.Clear();
-            Console.WriteLine(TAB + "List all beverages and sort by the unit price.");
+            Console.WriteLine(TAB + "List all products under $10 in unit price.");
             Console.WriteLine();
 
             //
             // query syntax
             //
-            var sortedProducts =
-                from product in products
-                where product.Price == "Beverages"
-                orderby product.UnitPrice descending
-                select product;
+            var sortedProducts = (
+                      from product in products
+                      where product.Units == "Unit Price" &&
+                          product.UnitPrice < 10
+                      orderby product.UnitPrice descending
+                      select new
+                      {
+                          Name = product.ProductName,
+                          Price = product.UnitPrice
+                      });
 
-            //
-            // lambda syntax
-            //
-            //var sortedProducts = products.Where(p => p.Price == "Beverages").OrderByDescending(p => p.UnitPrice);
-
+            
             Console.WriteLine(TAB + "Price".PadRight(15) + "Product Name".PadRight(25) + "Unit Price".PadLeft(10));
             Console.WriteLine(TAB + "--------".PadRight(15) + "------------".PadRight(25) + "----------".PadLeft(10));
 
-            foreach (Product product in sortedProducts)
+            foreach (var product in sortedProducts)
             {
-                Console.WriteLine(TAB + product.Price.PadRight(15) + product.ProductName.PadRight(25) + product.UnitPrice.ToString("C2").PadLeft(10));
+                Console.WriteLine(TAB + product.Name.PadRight(20) + product.Price.ToString("C2").PadLeft(15));
             }
 
+        
             Console.WriteLine();
             Console.WriteLine(TAB + "Press any key to continue.");
             Console.ReadKey();
@@ -341,8 +344,8 @@ namespace Demo_LINQ_ClassOfProducts
             //
             var sortedProducts =
                 from product in products
-                where product.Price == "Beverages" &&
-                    product.UnitPrice > 15
+                where product.Price == "Price" &&
+                    product.UnitPrice > 10
                 orderby product.UnitPrice descending
                 select new
                 {
