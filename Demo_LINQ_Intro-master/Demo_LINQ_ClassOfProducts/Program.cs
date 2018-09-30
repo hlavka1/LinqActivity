@@ -29,7 +29,10 @@ namespace Demo_LINQ_ClassOfProducts
             OrderByCatagoryAnoymous(productList);
 
             OrderByCatagoryExpensive(productList);
-
+            
+            OrderByTotalValueAnonymous(productList);
+            
+            OrderByNameAnonymous(productList);
             //
             // Write the following methods
             //
@@ -76,7 +79,10 @@ namespace Demo_LINQ_ClassOfProducts
             return products;
         }
 
-
+        /// <summary>
+        /// Order by category
+        /// </summary>
+        /// <param name="products"></param>
         private static void OrderByCatagory(List<Product> products)
         {
             string TAB = "   ";
@@ -143,7 +149,6 @@ namespace Demo_LINQ_ClassOfProducts
             //    Price = p.UnitPrice
             //});
 
-
             decimal average = products.Average(p => p.UnitPrice);
 
             Console.WriteLine(TAB + "Product Name".PadRight(20) + "Product Price".PadLeft(15));
@@ -162,8 +167,10 @@ namespace Demo_LINQ_ClassOfProducts
             Console.ReadKey();
         }
 
-
-        // FindExpensive(): List the most expensive Seafood. Consider there may be more than one. -- Morgan
+        /// <summary>
+        /// List the most expensive Seafood. Consider there may be more than one. -- Morgan
+        /// </summary>
+        /// <param name="products"></param>
         private static void OrderByCatagoryExpensive(List<Product> products)
         {
             string TAB = "   ";
@@ -212,6 +219,82 @@ namespace Demo_LINQ_ClassOfProducts
             Console.WriteLine();
             Console.WriteLine(TAB + "Press any key to continue.");
             Console.ReadKey();
+        }
+
+        /// <summary>
+        /// List all condiments with total value in stock (UnitPrice * UnitsInStock). Sort by total value. -- Wyatt
+        /// </summary>
+        /// <param name="products"></param>
+        private static void OrderByTotalValueAnonymous(List<Product> products)
+        {
+            string TAB = "    ";
+            
+            Console.Clear();
+            Console.WriteLine(TAB + "List of total order by stock.");
+            Console.WriteLine();
+
+            var totalValue = (
+                from product in products
+                orderby product.UnitPrice descending
+                select new
+                {
+                    Name = product.ProductName,
+                    Price = product.UnitPrice
+                });
+
+            decimal average = products.Average(p => p.UnitPrice);
+
+            Console.WriteLine(TAB + "Product Name".PadRight(40) + "Product Price".PadLeft(30));
+            Console.WriteLine(TAB + "------------".PadRight(40) + "-------------".PadLeft(30));
+
+            foreach (var product in totalValue)
+            {
+                Console.WriteLine(TAB + product.Name.PadRight(40) + product.Price.ToString("C2").PadLeft(30));
+            }
+
+            Console.WriteLine();
+            Console.WriteLine(TAB + "Total Value Price:".PadRight(40) + average.ToString("C2").PadLeft(30));
+
+            Console.WriteLine();
+            Console.WriteLine(TAB + "Press any key to continue.");
+            Console.ReadKey();
+            
+        }
+
+        private static void OrderByNameAnonymous(List<Product> products)
+        {
+            string TAB = "    ";
+            
+            Console.Clear();
+            Console.WriteLine(TAB + "List of items that start with the letter S and finding the price average.");
+            Console.WriteLine();
+
+            var totalValue = (
+                from product in products
+                where product.ProductName.StartsWith("S")
+                orderby product.UnitPrice descending
+                select new
+                {
+                    Name = product.ProductName,
+                    Price = product.UnitPrice
+                });
+
+            double average = products.Average(p => p.UnitsInStock);
+
+            Console.WriteLine(TAB + "Product Name".PadRight(40) + "Product Average Price".PadLeft(30));
+            Console.WriteLine(TAB + "------------".PadRight(40) + "---------------------".PadLeft(30));
+
+            foreach (var product in totalValue)
+            {
+                Console.WriteLine(TAB + product.Name.PadRight(40) + product.Price.ToString("C2").PadLeft(30));
+            }
+
+            Console.WriteLine();
+            Console.WriteLine(TAB + "Average Stock Value:".PadRight(40) + average.ToString("C2").PadLeft(30));
+
+            Console.WriteLine();
+            Console.WriteLine(TAB + "Press any key to continue.");
+            Console.ReadKey();            
         }
     }
 }
