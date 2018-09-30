@@ -34,7 +34,13 @@ namespace Demo_LINQ_ClassOfProducts
             // Write the following methods
             //
 
-            // OrderByUnits(): List the names and units of all products with less than 10 units in stock. Order by units. -- Justina
+
+
+            //
+
+
+
+
 
             // OrderByPrice(): List all products with a unit price less than $10. Order by price. -- Justina
 
@@ -177,9 +183,9 @@ namespace Demo_LINQ_ClassOfProducts
             //
             var mostExpensiveProducts = (
                 from product in products
-                where product.Category == "Seafood" 
+                where product.Category == "Seafood"
                 orderby product.UnitPrice descending
-                
+
                 select new
                 {
                     Name = product.ProductName,
@@ -212,6 +218,126 @@ namespace Demo_LINQ_ClassOfProducts
             Console.WriteLine();
             Console.WriteLine(TAB + "Press any key to continue.");
             Console.ReadKey();
+        }
+
+        // OrderByUnits(): List the names and units of all products with less than 10 units in stock. Order by units. -- Justina
+
+        private static void OrderByUnits(List<Product> products)
+        {
+            string TAB = "   ";
+
+            Console.Clear();
+            Console.WriteLine(TAB + "List all beverages and sort by the unit price.");
+            Console.WriteLine();
+
+            //
+            // query syntax
+            //
+            var sortedProducts =
+                from product in products
+                where product.Units == "Beverages"
+                orderby product.UnitPrice descending
+                select product;
+
+            //
+            // lambda syntax
+            //
+            //var sortedProducts = products.Where(p => p.Units == "Beverages").OrderByDescending(p => p.UnitPrice);
+
+            Console.WriteLine(TAB + "Units".PadRight(15) + "Product Name".PadRight(25) + "Unit Price".PadLeft(10));
+            Console.WriteLine(TAB + "--------".PadRight(15) + "------------".PadRight(25) + "----------".PadLeft(10));
+
+            foreach (Product product in sortedProducts)
+            {
+                Console.WriteLine(TAB + product.Units.PadRight(15) + product.ProductName.PadRight(25) + product.UnitPrice.ToString("C2").PadLeft(10));
+            }
+
+            Console.WriteLine();
+            Console.WriteLine(TAB + "Press any key to continue.");
+            Console.ReadKey();
+        }
+
+        private static void OrderByUnitsAnoymous(List<Product> products)
+        {
+            string TAB = "   ";
+
+            Console.Clear();
+            Console.WriteLine(TAB + "List all beverages that cost more the $15 and sort by the unit price.");
+            Console.WriteLine();
+
+            //
+            // query syntax
+            //
+            var sortedProducts =
+                from product in products
+                where product.Units == "Beverages" &&
+                    product.UnitPrice > 15
+                orderby product.UnitPrice descending
+                select new
+                {
+                    Name = product.ProductName,
+                    Price = product.UnitPrice
+                };
+        }
+
+        // OrderByPrice(): List all products with a unit price less than $10. Order by price. -- Justina
+
+        private static void OrderByPrice(List<Product> products)
+        {
+            string TAB = "   ";
+
+            Console.Clear();
+            Console.WriteLine(TAB + "List all beverages and sort by the unit price.");
+            Console.WriteLine();
+
+            //
+            // query syntax
+            //
+            var sortedProducts =
+                from product in products
+                where product.Price == "Beverages"
+                orderby product.UnitPrice descending
+                select product;
+
+            //
+            // lambda syntax
+            //
+            //var sortedProducts = products.Where(p => p.Price == "Beverages").OrderByDescending(p => p.UnitPrice);
+
+            Console.WriteLine(TAB + "Price".PadRight(15) + "Product Name".PadRight(25) + "Unit Price".PadLeft(10));
+            Console.WriteLine(TAB + "--------".PadRight(15) + "------------".PadRight(25) + "----------".PadLeft(10));
+
+            foreach (Product product in sortedProducts)
+            {
+                Console.WriteLine(TAB + product.Price.PadRight(15) + product.ProductName.PadRight(25) + product.UnitPrice.ToString("C2").PadLeft(10));
+            }
+
+            Console.WriteLine();
+            Console.WriteLine(TAB + "Press any key to continue.");
+            Console.ReadKey();
+        }
+
+        private static void OrderByPriceAnoymous(List<Product> products)
+        {
+            string TAB = "   ";
+
+            Console.Clear();
+            Console.WriteLine(TAB + "List all beverages that cost more the $15 and sort by the unit price.");
+            Console.WriteLine();
+
+            //
+            // query syntax
+            //
+            var sortedProducts =
+                from product in products
+                where product.Price == "Beverages" &&
+                    product.UnitPrice > 15
+                orderby product.UnitPrice descending
+                select new
+                {
+                    Name = product.ProductName,
+                    Price = product.UnitPrice
+                };
         }
     }
 }
