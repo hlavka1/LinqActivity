@@ -40,7 +40,7 @@ namespace Demo_LINQ_ClassOfProducts
             
             OrderByStockAnonymous(productList); // -- Wyatt, custom
             
-            OrderByCanBringOnBusAnoymous(productList); // -- Justina
+            OrderByStartingWithL(productList); // -- Justina
 
             OrderByUnits(productList); // -- Justina
             
@@ -228,7 +228,7 @@ namespace Demo_LINQ_ClassOfProducts
             string TAB = "   ";
 
             Console.Clear();
-            Console.WriteLine(TAB + "List of Products Under 10 Units of Stock.");
+            Console.WriteLine(TAB + "List of Products Under 5 Units of Stock.");
             Console.WriteLine();
 
             //
@@ -236,7 +236,7 @@ namespace Demo_LINQ_ClassOfProducts
             //
             var lowOnStock = (
                 from product in products
-                where product.UnitsInStock < 10
+                where product.UnitsInStock < 5
                 orderby product.UnitsInStock ascending
 
                 select new
@@ -261,9 +261,9 @@ namespace Demo_LINQ_ClassOfProducts
         }
 
 
-// OrderByUnits(): List the names and units of all products with less than 10 units in stock. Order by units. -- Justina
+        // OrderByUnits(): List the names and units of all products with less than 10 units in stock. Order by units. -- Justina
 
-private static void OrderByUnits(List<Product> products)
+        private static void OrderByUnits(List<Product> products)
         {
             string TAB = "   ";
 
@@ -274,23 +274,24 @@ private static void OrderByUnits(List<Product> products)
             //
             // query syntax
             //
-            var sortedProducts =
+            var sortedProducts = (
                 from product in products
-                where product.Units == "Units"
+                where product.UnitsInStock < 10
                 orderby product.UnitsInStock descending
-                select product;
-
-            //
-            // lambda syntax
-            //
-            //var sortedProducts = products.Where(p => p.Units == "Beverages").OrderByDescending(p => p.UnitPrice);
+                select new
+                {
+                    Name = product.ProductName,
+                    Unit = product.UnitsInStock,
+                    Price = product.UnitPrice
+                }
+                );
 
             Console.WriteLine(TAB + "Units".PadRight(15) + "Product Name".PadRight(25) + "Unit Price".PadLeft(10));
             Console.WriteLine(TAB + "--------".PadRight(15) + "------------".PadRight(25) + "----------".PadLeft(10));
 
-            foreach (Product product in sortedProducts)
+            foreach (var product in sortedProducts)
             {
-                Console.WriteLine(TAB + product.Units.PadRight(15) + product.ProductName.PadRight(25) + product.UnitsInStock.ToString("C2").PadLeft(10));
+                Console.WriteLine(TAB + product.Unit.ToString().PadRight(15) + product.Name.ToString().PadRight(25) + product.Price.ToString().PadLeft(10));
             }
 
             Console.WriteLine();
@@ -333,10 +334,9 @@ private static void OrderByUnits(List<Product> products)
             //
             // query syntax
             //
-            var sortedProducts = (
+            var productsUnder10 = (
                       from product in products
-                      where product.Units == "Unit Price" &&
-                          product.UnitPrice < 10
+                      where product.UnitPrice < 10
                       orderby product.UnitPrice descending
                       select new
                       {
@@ -345,12 +345,12 @@ private static void OrderByUnits(List<Product> products)
                       });
 
             
-            Console.WriteLine(TAB + "Price".PadRight(15) + "Product Name".PadRight(25) + "Unit Price".PadLeft(10));
-            Console.WriteLine(TAB + "--------".PadRight(15) + "------------".PadRight(25) + "----------".PadLeft(10));
+            Console.WriteLine(TAB + "Product Name".PadRight(35) + "Unit Price".PadLeft(20));
+            Console.WriteLine(TAB + "------------".PadRight(35) + "----------".PadLeft(20));
 
-            foreach (var product in sortedProducts)
+            foreach (var product in productsUnder10)
             {
-                Console.WriteLine(TAB + product.Name.PadRight(20) + product.Price.ToString("C2").PadLeft(15));
+                Console.WriteLine(TAB + product.Name.PadRight(35) + product.Price.ToString("C2").PadLeft(20));
             }
 
         
@@ -493,31 +493,42 @@ private static void OrderByUnits(List<Product> products)
             Console.WriteLine(TAB + "Press any key to continue.");
             Console.ReadKey();            
         }
-        
-        private static void OrderByCanBringOnBusAnoymous(List<Product> products)
+
+        /// <summary>
+        /// Justina's Choice - List products starting with L
+        /// </summary>
+        /// <param name="products"></param>
+        private static void OrderByStartingWithL(List<Product> products)
         {
-            string TAB = "   ";
+            string TAB = "    ";
 
             Console.Clear();
-            Console.WriteLine(TAB + "List all beverages that cost more the $15 and sort by the unit CanBringOnBus.");
+            Console.WriteLine(TAB + "List of items that start with the letter L and their price.");
             Console.WriteLine();
 
-            //
-            // query syntax
-            //
-            var sortedProducts =
+            var productsWithL = (
                 from product in products
-                where product.CanBringOnBus == "Beverages" &&
-                      product.UnitCanBringOnBus == true
-                orderby product.UnitCanBringOnBus descending
+                where product.ProductName.StartsWith("L")
+                orderby product.UnitPrice descending
                 select new
                 {
                     Name = product.ProductName,
-                    CanBringOnBus = product.UnitCanBringOnBus
-                      
-                };
+                    Price = product.UnitPrice
+                });
+
+            Console.WriteLine(TAB + "Product Name".PadRight(40) + "Product Average Price".PadLeft(30));
+            Console.WriteLine(TAB + "------------".PadRight(40) + "---------------------".PadLeft(30));
+
+            foreach (var product in productsWithL)
+            {
+                Console.WriteLine(TAB + product.Name.PadRight(40) + product.Price.ToString("C2").PadLeft(30));
+            }
+
+            Console.WriteLine();
+            Console.WriteLine(TAB + "Press any key to continue.");
+            Console.ReadKey();
         }
-        
+
         /// <summary>
         /// Grab all the things and list them by units in stock -- Wyatt
         /// </summary>
